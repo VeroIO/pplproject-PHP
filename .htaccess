@@ -1,0 +1,12 @@
+RewriteEngine On
+
+RewriteRule ^$ includes/index.php [L]
+RewriteRule ^index.html$ includes/index.php [L]
+RewriteRule ^quanligiaodich.html$ includes/quanligiaodich.php [L]
+RewriteRule ^login.html$ includes/login.php [L]
+RewriteRule ^signup.html$ register.php [L]
+RewriteRule ^dangxuat.html$ logout.php [L]
+
+#controller Htaccess
+
+RewriteRule ^c_reg.html$ controller/c_reg.php [L]
