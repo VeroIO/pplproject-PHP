@@ -1,4 +1,4 @@
-<?
+<?php
 require_once '../core/config.php';
 ?>
 <!DOCTYPE html>
@@ -51,15 +51,17 @@ require_once '../core/config.php';
             <div class="login-panel panel panel-default plain animated bounceIn">
                 <!-- Start .panel -->
                 <div class="panel-body">
-                    <?if($_GET['message'] && $_GET['type'] == "success"){?>
-                        <div class="alert alert-success text-center">
-                            <? echo $_GET['message'] ?>
-                        </div>                
-                    <?}else{?>
-                        <div class="alert alert-danger text-center">
-                            <? echo $_GET['message'] ?>
-                        </div>                     
-                    <?}?>                
+                    <?php if($_GET){ ?>
+                        <?php if($_GET['message'] && $_GET['type'] == "success"){?>
+                            <div class="alert alert-success text-center">
+                                <?php echo $_GET['message'] ?>
+                            </div>                
+                        <?php }else{?>
+                            <div class="alert alert-danger text-center">
+                                <?php echo $_GET['message'] ?>
+                            </div>                     
+                        <?php }?>    
+                    <?php }?>            
                     <form class="form-horizontal mt0" action="<?php echo API ?>/api/login" method="POST" id="login-form" role="form">
                         <div class="form-group">
                             <div class="col-md-12">

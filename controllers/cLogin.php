@@ -3,7 +3,7 @@
     ob_start();
     session_start();
     if ( $_GET['message'] ){
-        header("Location:".PHP_BASE."/dangnhap.html?message=".$_GET['message']);
+        header("Location:".PHP_BASE."/login.html?message=".$_GET['message']);
     }else{
         $token = $_GET['token'];
         $_SESSION["jwt"] = $token;

@@ -2,6 +2,10 @@
     session_start();
     if(!isset($_SESSION["jwt"])){
         header('Location: login.html');
+    }else{
+        require_once '../core/config.php';
+        $link=API.'/api/user/info?access_token='.$_SESSION['jwt'];
+        $user_info=json_decode(file_get_contents($link));
     }
  ?>
 <!doctype html>
@@ -10,7 +14,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Sàn Giao Dịch|Quản Lí</title>
+    <title>Quản Lí Bệnh Viện</title>
     <!-- Mobile specific metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Force IE9 to render in normal mode -->
@@ -49,7 +53,7 @@
             <nav class="navbar navbar-default" role="navigation">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.html">
-                Sàn Giao Dịch<span class="slogan">.</span>
+                QL Bệnh Viện<span class="slogan">.</span>
             </a>
                 </div>
                 <div id="navbar-no-collapse" class="navbar-no-collapse">
@@ -168,18 +172,16 @@
                         <li class="dropdown">
                             <a href="index.html#" class="dropdown-toggle avatar" data-toggle="dropdown">
                                 <img src="img/avatar.jpg" alt="" class="image" />
-                                <span class="txt">admin@supr.com</span>
+                                <span class="txt"><?php echo $user_info->userName ?></span>
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu right">
                                 <li class="menu">
                                     <ul>
-                                        <li><a href="index.html#"><i class="s16 icomoon-icon-user-plus"></i>Edit profile</a>
+                                        <li><a href="editprofile.html"><i class="s16 icomoon-icon-user-plus"></i>Edit profile</a>
                                         </li>
-                                        <li><a href="index.html#"><i class="s16 icomoon-icon-bubble-2"></i>Comments</a>
-                                        </li>
-                                        <li><a href="index.html#"><i class="s16 icomoon-icon-plus"></i>Add user</a>
-                                        </li>
+                                        <li><a href="change-password.html"><i class="s16 icomoon-icon-bubble-2"></i>Change Pass</a>
+                                        </li>                                        
                                     </ul>
                                 </li>
                             </ul>
@@ -227,9 +229,15 @@
                                 <ul>
                                     <li><a href="index.html"><i class="s16 icomoon-icon-screen-2"></i><span class="txt">Dashboard</span> </a>
                                     </li>
+                                    <?php
+                                        if($user_info->role == 'admin' || $user_info->role =='sysAdmin' ){
+                                    ?>
                                     <li>
-                                        <a href="quanligiaodich.html"><i class="s16 icomoon-icon-map"></i><span class="txt">Quản Lí Giao Dịch</span></a>
-                                    </li>
+                                        <a href="usersmanagement.html"><i class="s16 icomoon-icon-map"></i><span class="txt">Quản Lí User</span></a>
+                                    </li>                                    
+                                    <?php
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                         </div>
