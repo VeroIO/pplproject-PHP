@@ -3,11 +3,13 @@ RewriteEngine On
 RewriteRule ^$ includes/index.php [L]
 RewriteRule ^index.html$ includes/index.php [L]
 RewriteRule ^usersmanagement.html$ includes/usersmanagement.php [L]
+RewriteRule ^specialtycategories.html$ includes/specialtymanagement.php [L]
 RewriteRule ^editprofile.html$ includes/editprofile.php [L]
 RewriteRule ^login.html$ includes/login.php [L]
 RewriteRule ^signup.html$ register.php [L]
 RewriteRule ^dangxuat.html$ logout.php [L]
 RewriteRule ^change-password.html$ includes/changePassword.php [L]
+RewriteRule ^set-admin.html$ includes/setadmin.php [L]
 
 #controller Htaccess
 

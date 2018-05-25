@@ -17,7 +17,7 @@
                     <div class="panel panel-default toggle panelClose panelRefresh panelMove" id="tokendiv" style="margin-top: 10px;">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title">Danh Sách Người Dùng</h4>
+                            <h4 class="panel-title">Danh Sách Người Dùng (Set Admin)</h4>
                             <div class="panel-controls panel-controls-right"><a href="#" class="panel-refresh"><i class="brocco-icon-refresh s12"></i></a><a href="#" class="toggle panel-minimize"><i class="icomoon-icon-plus"></i></a><a href="#" class="panel-close"><i class="icomoon-icon-close"></i></a></div>
                         </div>
                         <div class="panel-body">
@@ -29,7 +29,6 @@
                                             <th>UserName</th>
                                             <th>Role</th>
                                             <th>Acction</th>
-                                            <th>Trạng Thái</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -40,15 +39,9 @@
                                             <td class="username"><?php echo $data->userName; ?></td>
                                             <td><?php echo $data->role; ?></td>
                                             <td>
-                                                <div class="btn-group">
-                                                    <a class="btn btn-warning edit_cate">Sửa</a>
-                                                    <a class="btn btn-danger del_cate disabled">Xóa</a>                                                    
-                                                </div>                                               
-                                            </td>
-                                            <td>
                                                 <div class="toggle-custom toggle-inline">
                                                     <label class="toggle" data-on="ON" data-off="OFF">
-                                                        <input type="checkbox" class="status" id="checkbox-toggle3" name="checkbox-toggle" <?php if($data->active == 1){ echo "checked";}?>>
+                                                        <input type="checkbox" class="statusAdmin" id="checkbox-toggle3" name="checkbox-toggle" <?php if($data->role == 'admin'){ echo "checked";}?>>
                                                         <span class="button-checkbox"></span>
                                                     </label>
                                                 </div>                                             
@@ -92,20 +85,20 @@
   </div>
 </div>
     <script>
-        $(".status").change(function() {
+        $(".statusAdmin").change(function() {
             username = $(this).closest("tr").find(".username").text();
             access_token = '<?php echo $_SESSION['jwt']; ?>';
             if(this.checked){
-                $.post('<?php echo API ?>/api/user/active', {
-                    active_user: username,
+                $.post('<?php echo API ?>/api/user/setadmin', {
+                    setadmin_user: username,
                     access_token:access_token,
                 }, function(data, status) {
                     $('#ketqua').modal('show');
                     $('#contentketqua').html(data.message);
                 });
             }else{
-                $.post('<?php echo API ?>/api/user/deactive', {
-                    deactive_user: username,
+                $.post('<?php echo API ?>/api/user/unsetadmin', {
+                    unsetadmin_user: username,
                     access_token:access_token,
                 }, function(data, status) {
                     $('#ketqua').modal('show');

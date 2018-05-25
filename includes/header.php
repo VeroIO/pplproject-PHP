@@ -230,11 +230,23 @@
                                     <li><a href="index.html"><i class="s16 icomoon-icon-screen-2"></i><span class="txt">Dashboard</span> </a>
                                     </li>
                                     <?php
+                                        if($user_info->role =='sysAdmin' ){
+                                    ?>
+                                    <li>
+                                        <a href="set-admin.html"><i class="s16 icomoon-icon-map"></i><span class="txt">Đăng Kí Admin</span></a>
+                                    </li>                                    
+                                    <?php
+                                    }
+                                    ?>                                                                        
+                                    <?php
                                         if($user_info->role == 'admin' || $user_info->role =='sysAdmin' ){
                                     ?>
                                     <li>
                                         <a href="usersmanagement.html"><i class="s16 icomoon-icon-map"></i><span class="txt">Quản Lí User</span></a>
-                                    </li>                                    
+                                    </li>
+                                    <li>
+                                        <a href="specialtycategories.html"><i class="s16 icomoon-icon-map"></i><span class="txt">Quản Lí Specialty</span></a>
+                                    </li>                                                                        
                                     <?php
                                     }
                                     ?>

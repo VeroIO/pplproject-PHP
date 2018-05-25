@@ -8,7 +8,7 @@
         $page=0;
     }
     $offset = $page*$limit;
-    $datas = json_decode(file_get_contents(API.'/api/admin/userlist?offset='.$offset.'&limit='.$limit.'&access_token='.$_SESSION['jwt']));
+    $datas = json_decode(file_get_contents(API.'/api/specialty/specialtylist?offset='.$offset.'&limit='.$limit.'&access_token='.$_SESSION['jwt']));
     $total_page = ceil($datas->count/$limit);
 ?>
         <div class="col-md-9 col-md-offset-2">
@@ -22,36 +22,28 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
+                                <button class="btn btn-success pull-right" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus"> Thêm Specialty</i></button>
+                            </div>
+                            <div class="row">
                                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;"><div class="table-responsive" style="overflow: hidden; width: 100%; height: auto;"><table class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>UserName</th>
-                                            <th>Role</th>
+                                            <th>Name Type</th>
                                             <th>Acction</th>
-                                            <th>Trạng Thái</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach ($datas->rows as $data) {
                                         ?>
                                         <tr>
-                                            <td class="id"><?php echo $data->id; ?></td>
-                                            <td class="username"><?php echo $data->userName; ?></td>
-                                            <td><?php echo $data->role; ?></td>
+                                            <td class="idSpec"><?php echo $data->id; ?></td>
+                                            <td class="typeName"><?php echo $data->type; ?></td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <a class="btn btn-warning edit_cate">Sửa</a>
-                                                    <a class="btn btn-danger del_cate disabled">Xóa</a>                                                    
+                                                    <a class="btn btn-warning edit_specialty" data-toggle="modal" data-target="#editModal">Sửa</a>
+                                                    <a class="btn btn-danger del_specialty">Xóa</a>                                                    
                                                 </div>                                               
-                                            </td>
-                                            <td>
-                                                <div class="toggle-custom toggle-inline">
-                                                    <label class="toggle" data-on="ON" data-off="OFF">
-                                                        <input type="checkbox" class="status" id="checkbox-toggle3" name="checkbox-toggle" <?php if($data->active == 1){ echo "checked";}?>>
-                                                        <span class="button-checkbox"></span>
-                                                    </label>
-                                                </div>                                             
                                             </td>
                                         </tr> 
                                         <?php } ?>                             
@@ -61,7 +53,7 @@
                                     <ul class="pagination mt0 mb0">
                                         <?php for ($i=0; $i < $total_page  ; $i++) { 
                                         ?>
-                                        <li class="<?php if($page == $i){ echo 'active';} ?>"><a href="usersmanagetment.html?page=<?php echo $i+1; ?>"><?php echo $i+1; ?></a>
+                                        <li class="<?php if($page == $i){ echo 'active';} ?>"><a href="specialtycategories.html?page=<?php echo $i+1; ?>"><?php echo $i+1; ?></a>
                                         </li>
                                         <?php } ?>
                                     </ul>
@@ -81,7 +73,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" onclick="location.reload();">&times;</button>
-        <h4 class="modal-title">User Management</h4>
+        <h4 class="modal-title">Specialty Management</h4>
       </div>
       <div class="modal-body text-center" id="contentketqua">
       </div>
@@ -91,28 +83,51 @@
     </div>
   </div>
 </div>
+<div id="addModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Specialty Management</h4>
+      </div>
+      <div class="modal-body text-center">
+        <div class="form-group">
+            <label class="col-lg-2 col-md-3 control-label" for="">Type Name</label>
+            <div class="col-lg-10 col-md-9">
+               <input type="text" class="form-control" name="typeName" value="">
+            </div>
+        </div> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="addSpecialty">Thêm</button>
+      </div>
+    </div>
+  </div>
+</div>
     <script>
-        $(".status").change(function() {
-            username = $(this).closest("tr").find(".username").text();
-            access_token = '<?php echo $_SESSION['jwt']; ?>';
-            if(this.checked){
-                $.post('<?php echo API ?>/api/user/active', {
-                    active_user: username,
-                    access_token:access_token,
-                }, function(data, status) {
-                    $('#ketqua').modal('show');
-                    $('#contentketqua').html(data.message);
-                });
-            }else{
-                $.post('<?php echo API ?>/api/user/deactive', {
-                    deactive_user: username,
-                    access_token:access_token,
-                }, function(data, status) {
-                    $('#ketqua').modal('show');
-                    $('#contentketqua').html(data.message);
-                });
-            }            
-        });    
+        access_token = '<?php echo $_SESSION['jwt']; ?>';
+        $("#addSpecialty").click(()=>{
+            $('#addModal').modal('hide');
+            typeName = $('input[name=typeName]').val();
+            $.post('<?php echo API ?>/api/specialty/add', {
+                typeName: typeName,
+                access_token:access_token,
+            }, function(data, status) {
+                $('#ketqua').modal('show');
+                $('#contentketqua').html(data.message);
+            });            
+        })
+        $(".del_specialty").click(function() {
+            id = $(this).closest("tr").find(".idSpec").text();
+            $.post('<?php echo API ?>/api/specialty/del', {
+                specialtyId: id,
+                access_token:access_token,
+            }, function(data, status) {
+                $('#ketqua').modal('show');
+                $('#contentketqua').html(data.message);
+            });            
+        });                 
     </script>
 <?php 
     require_once '../includes/footer.php';
