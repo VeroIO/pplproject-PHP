@@ -69,7 +69,7 @@
                             <!-- col-md-12 end here -->
                             <div class="col-lg-12">
                                 <div class="input-group input-icon">
-                                    <input type="email" name="username" id="username" class="form-control" placeholder="Type your username ...">
+                                    <input type="text" name="username" id="username" class="form-control" placeholder="Type your username ...">
                                     <span class="input-group-addon"><i class="fa fa-envelope s16"></i></span>
                                 </div>
                             </div>

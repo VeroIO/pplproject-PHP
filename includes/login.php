@@ -114,7 +114,7 @@ require_once '../core/config.php';
                 <div class="panel-footer gray-lighter-bg">
                     <h4 class="text-center"><strong>Don`t have an account ?</strong>
                     </h4>
-                    <p class="text-center"><a href="#" class="btn btn-success">Create account</a>
+                    <p class="text-center"><a href="signup.html" class="btn btn-success">Create account</a>
                     </p>
                 </div>
             </div>
