@@ -10,6 +10,7 @@ RewriteRule ^signup.html$ register.php [L]
 RewriteRule ^dangxuat.html$ logout.php [L]
 RewriteRule ^change-password.html$ includes/changePassword.php [L]
 RewriteRule ^set-admin.html$ includes/setadmin.php [L]
+RewriteRule ^doctor-profile.html$ doctorProfile.php [L]
 
 #controller Htaccess
 

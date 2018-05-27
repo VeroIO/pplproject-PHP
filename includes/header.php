@@ -1,11 +1,15 @@
 <?php 
+    require_once '../core/curllib.php';
     session_start();
     if(!isset($_SESSION["jwt"])){
         header('Location: login.html');
     }else{
         require_once '../core/config.php';
         $link=API.'/api/user/info?access_token='.$_SESSION['jwt'];
-        $user_info=json_decode(file_get_contents($link));
+        $user_info=json_decode(hellcatget($link));
+        if($user_info->message == "Unauthorized user!"){
+            header('Location: login.html');
+        }
     }
  ?>
 <!doctype html>
