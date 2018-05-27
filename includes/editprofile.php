@@ -44,7 +44,21 @@ require_once '../includes/header.php';
                                 'degree' => $_POST['degree'],
                                 'acceptedInsurance' => $_POST['acceptedInsurance'],
                                 'email' => $_POST['email'],
-                                'language' => $_POST['language'],                             
+                                'language' => $_POST['language'],
+                                'monday_start' => $_POST['monday_start'],
+                                'monday_end' => $_POST['monday_end'],
+                                'tuesday_start' => $_POST['tuesday_start'],
+                                'tuesday_end' => $_POST['tuesday_end'],
+                                'wednesday_start' => $_POST['wednesday_start'],
+                                'wednesday_end' => $_POST['wednesday_end'],
+                                'thursday_start' => $_POST['thursday_start'],
+                                'thursday_end' => $_POST['thursday_end'],
+                                'friday_start' => $_POST['friday_start'],
+                                'friday_end' => $_POST['friday_end'],
+                                'saturday_start' => $_POST['saturday_start'],
+                                'saturday_end' => $_POST['saturday_end'],
+                                'sunday_start' => $_POST['sunday_start'],
+                                'sunday_end' => $_POST['sunday_end'],                      
                             ];
                             $res=hellcatpost($api_url,$post_data);
                             $res=json_decode($res);                                                        
@@ -52,7 +66,6 @@ require_once '../includes/header.php';
                         ?>
                         <div class="panel-body">
                                 <?php
-                                    var_dump($_POST);
                                     if($res->type == 'success'){
                                         echo '<div class="alert alert-success">
                                                 '.$res->message.'
@@ -182,6 +195,18 @@ require_once '../includes/header.php';
                                 ?>
                                 <?php
                                     if($user_info->role =='doctor' ){
+                                    $api_url=API.'/api/user/get_working_hours?doctor_id='.$user_info->id;
+                                    $res=hellcatget($api_url);
+                                    $res=json_decode($res);
+                                    if($res != null){
+                                        $monday=explode('-',$res->monday);
+                                        $tuesday=explode('-',$res->tuesday);
+                                        $wednesday=explode('-',$res->wednesday);
+                                        $thursday=explode('-',$res->thursday);
+                                        $friday=explode('-',$res->friday);
+                                        $saturday=explode('-',$res->saturday);
+                                        $sunday=explode('-',$res->sunday);
+                                    }
                                 ?>
                                 <form class="form-horizontal group-border stripped" method="POST">
                                     <div class="form-group">
@@ -250,14 +275,14 @@ require_once '../includes/header.php';
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="monday_start" type="text" class="form-control default-timepicker">
+                                                <input name="monday_start" type="text" class="form-control default-timepicker" value="<?php echo $monday[0]?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1">To</div>
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="monday_end" type="text" class="form-control default-timepicker">
+                                                <input name="monday_end" type="text" class="form-control default-timepicker" value="<?php echo $monday[1]?>">
                                             </div>
                                         </div>                                        
                                     </div>
@@ -266,14 +291,14 @@ require_once '../includes/header.php';
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="tuesday_start" type="text" class="form-control default-timepicker">
+                                                <input name="tuesday_start" type="text" class="form-control default-timepicker" value="<?php echo $tuesday[0]?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1">To</div>
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="tuesday_end" type="text" class="form-control default-timepicker">
+                                                <input name="tuesday_end" type="text" class="form-control default-timepicker" value="<?php echo $tuesday[1]?>">
                                             </div>
                                         </div>
                                     </div>
@@ -282,14 +307,14 @@ require_once '../includes/header.php';
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="wednesday_start" type="text" class="form-control default-timepicker">
+                                                <input name="wednesday_start" type="text" class="form-control default-timepicker" value="<?php echo $wednesday[0]?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1">To</div>
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="wednesday_end" type="text" class="form-control default-timepicker">
+                                                <input name="wednesday_end" type="text" class="form-control default-timepicker" value="<?php echo $wednesday[1]?>">
                                             </div>
                                         </div>
                                     </div>
@@ -298,14 +323,14 @@ require_once '../includes/header.php';
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="thursday_start" type="text" class="form-control default-timepicker">
+                                                <input name="thursday_start" type="text" class="form-control default-timepicker" value="<?php echo $thursday[0]?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1">To</div>
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="thursday_end" type="text" class="form-control default-timepicker">
+                                                <input name="thursday_end" type="text" class="form-control default-timepicker" value="<?php echo $thursday[1]?>">
                                             </div>
                                         </div>
                                     </div>
@@ -314,14 +339,14 @@ require_once '../includes/header.php';
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="friday_start" type="text" class="form-control default-timepicker">
+                                                <input name="friday_start" type="text" class="form-control default-timepicker" value="<?php echo $friday[0]?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1">To</div>
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="friday_end" type="text" class="form-control default-timepicker">
+                                                <input name="friday_end" type="text" class="form-control default-timepicker" value="<?php echo $friday[1]?>">
                                             </div>
                                         </div>
                                     </div>
@@ -330,14 +355,14 @@ require_once '../includes/header.php';
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="saturday_start" type="text" class="form-control default-timepicker">
+                                                <input name="saturday_start" type="text" class="form-control default-timepicker" value="<?php echo $saturday[0]?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1">To</div>
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="saturday_end" type="text" class="form-control default-timepicker">
+                                                <input name="saturday_end" type="text" class="form-control default-timepicker" value="<?php echo $saturday[1]?>">
                                             </div>
                                         </div>
                                     </div>
@@ -346,14 +371,14 @@ require_once '../includes/header.php';
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="sunday_start" type="text" class="form-control default-timepicker">
+                                                <input name="sunday_start" type="text" class="form-control default-timepicker" value="<?php echo $sunday[0]?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1">To</div>
                                         <div class="col-lg-4 col-md-4">
                                             <div class="input-group bootstrap-timepicker"><div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="fa fa-angle-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-up"></i></a></td></tr><tr><td><input type="text" class="bootstrap-timepicker-hour form-control" maxlength="2"></td> <td class="separator">:</td><td><input type="text" class="bootstrap-timepicker-minute form-control" maxlength="2"></td> <td class="separator">&nbsp;</td><td><input type="text" class="bootstrap-timepicker-meridian form-control" maxlength="2"></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="fa fa-angle-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="fa fa-angle-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="fa fa-angle-down"></i></a></td></tr></tbody></table></div>
                                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input name="sunday_end" type="text" class="form-control default-timepicker">
+                                                <input name="sunday_end" type="text" class="form-control default-timepicker" value="<?php echo $sunday[1]?>">
                                             </div>
                                         </div>
                                     </div>                                                                       
