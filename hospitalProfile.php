@@ -161,15 +161,7 @@ color: #ffac0c;
                     <!-- End .row -->
                 </div>
             </div>
-        </div>
-        <div class="col-md-9 col-md-offset-2">
-            <div class="panel panel-default" id="supr0">
-                 <div class="panel-heading"><h4 class="panel-title">Bình Luận Và Đánh Giá</h4></div>
-                 <div class="panel-body">
-                    <input type="text" class="form-control" placeholder="Vui Lòng Điền Bình Luận Của Bạn....">
-                 </div>
-            </div>
-        </div>
+        </div> 
 <div id="ketqua" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
