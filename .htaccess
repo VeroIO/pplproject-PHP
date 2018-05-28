@@ -13,6 +13,7 @@ RewriteRule ^change-password.html$ includes/changePassword.php [L]
 RewriteRule ^set-admin.html$ includes/setadmin.php [L]
 RewriteRule ^doctor-profile.html$ doctorProfile.php [L]
 RewriteRule ^hospital-profile.html$ hospitalProfile.php [L]
+RewriteRule ^lost-password.html$ lostPassword.php [L]
 
 #controller Htaccess
 
