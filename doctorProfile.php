@@ -12,6 +12,8 @@
             $is_bookmark = true;
         }
     }
+    $linkapi3 = API.'/api/user/get_list_cmt?id='.$_GET['id'].'&access_token='.$_SESSION['jwt'];
+    $list_comments = json_decode(hellcatget($linkapi3));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +42,7 @@
         <link href="css/main.css" rel="stylesheet" />
         <!-- Custom stylesheets ( Put your own changes here ) -->
         <link href="css/custom.css" rel="stylesheet" />
+        <link href="css/bootstrap-rating.css" rel="stylesheet" />
         <meta name="msapplication-TileColor" content="#3399cc" />
         <style>
 .demo-bg{
@@ -166,7 +169,21 @@ color: #ffac0c;
             <div class="panel panel-default" id="supr0">
                  <div class="panel-heading"><h4 class="panel-title">Bình Luận Và Đánh Giá</h4></div>
                  <div class="panel-body">
-                    <input type="text" class="form-control" placeholder="Vui Lòng Điền Bình Luận Của Bạn....">
+                    <div id="listcmt">
+                        <?php foreach ($list_comments as $comments) { ?>
+                            <?php if($comments->status == '1'){?>
+                                <div><h4><?php echo $comments->parrent_name ?></h4></div>
+                                <input name="rating" type="hidden" class="rating" value="<?php echo $comments->rating ?>" disabled/>
+                                <div><?php echo $comments->content ?></div>
+                            <?php }?>
+                        <?php }?>
+                    </div>
+                    <div id="rating" style="font-size:30px;">
+                        <input name="rating" type="hidden" class="rating"/>   
+                    </div>             
+                    <textarea name="comment" type="text" class="form-control" placeholder="Vui Lòng Điền Bình Luận Của Bạn...." cols="30" rows="4"></textarea>
+                    <br>
+                    <button class="btn btn-primary pull-right" id="post_cmt">Đăng</button>
                  </div>
             </div>
         </div>
@@ -206,9 +223,30 @@ color: #ffac0c;
         <!-- Form plugins -->
         <script src="plugins/forms/validation/jquery.validate.js"></script>
         <script src="plugins/forms/validation/additional-methods.min.js"></script>
+        <script src="js/bootstrap-rating.min.js"></script>
         <!-- Init plugins olny for this page -->
         <script>
         access_token = '<?php echo $_SESSION['jwt']; ?>';
+        $("#post_cmt").click(function () {
+            var rate = $('input[name=rating]').rating('rate');
+            var comment = $('textarea[name=comment]').val();
+            id = '<?php echo $_GET['id']; ?>';
+            if(rate == ''){
+                alert('vui lòng đánh giá trước khi đăng bài viết');
+            }else if(comment == ''){
+                alert('vui lòng nhập nội dung đánh giá')
+            }else{
+                $.post('<?php echo API ?>/api/user/postcmt', {
+                    cmt_for: id,
+                    content: comment,
+                    rating : rate,
+                    access_token:access_token,
+                }, function(data, status) {
+                    $('#ketqua').modal('show');
+                    $('#contentketqua').html(data.message);
+                }); 
+            }
+        })
         $("#mark").click(function() {
             id = '<?php echo $_GET['id']; ?>';
             $.post('<?php echo API ?>/api/user/mark', {

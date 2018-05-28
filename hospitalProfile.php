@@ -106,8 +106,8 @@ color: #ffac0c;
                         </div>
                         <div class="col-md-8">
                             <div class="profile-name">
-                                <h3><?php echo $doctor_info->data->firstName.' '.$doctor_info->data->lastName ?></h3>
-                                <p class="job-title mb0"><i class="fa fa-building"> <?php echo $doctor_info->data->hospitalName?></i></p>
+                                <h3><?php echo $doctor_info->data->hospitalName ?></h3>
+                                <p class="job-title mb0"><i class="fa fa-building"> <?php echo $doctor_info->data->address?></i></p>
                                 <br>
                                 <a href="profile.html#" class="btn btn-primary btn-large mr10"> <i class="fa fa-envelope"></i> Send email</a>
                                 <?php if($is_bookmark == true) {?>
@@ -123,20 +123,14 @@ color: #ffac0c;
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <dl class="mt20">
-                                                <dt class="text-muted">Gender</dt>
-                                                <dd><?php echo $doctor_info->data->gender?></dd>                                        
-                                                <dt class="text-muted">Degree</dt>
-                                                <dd><?php echo $doctor_info->data->degree?></dd>
-                                                <dt class="text-muted">Acpected Insurance</dt>
-                                                <dd><?php echo $doctor_info->data->acceptedInsurance?></dd>
+                                                <dt class="text-muted">Admin Name</dt>
+                                                <dd><?php echo $doctor_info->data->firstName.' '.$doctor_info->data->lastName ?></dd>                                        
                                             </dl>                                         
                                         </div>
                                         <div class="col-sm-4">
                                             <dl class="mt20">
                                                 <dt class="text-muted">Email</dt>
                                                 <dd><?php echo $doctor_info->data->email?></dd>
-                                                <dt class="text-muted">Language</dt>
-                                                <dd><?php echo $doctor_info->data->languages?></dd>
                                             </dl>                                        
                                         </div>
                                         <div class="col-sm-4">

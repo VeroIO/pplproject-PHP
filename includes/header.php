@@ -250,7 +250,10 @@
                                     </li>
                                     <li>
                                         <a href="specialtycategories.html"><i class="s16 icomoon-icon-map"></i><span class="txt">Quản Lí Specialty</span></a>
-                                    </li>                                                                        
+                                    </li>
+                                    <li>
+                                        <a href="commentsmanagement.html"><i class="s16 icomoon-icon-map"></i><span class="txt">Quản Lí Đánh Giá</span></a>
+                                    </li>                                                                                                        
                                     <?php
                                     }
                                     ?>
